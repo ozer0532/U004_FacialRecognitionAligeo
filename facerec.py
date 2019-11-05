@@ -10,7 +10,7 @@ import matplotlib.pyplot as plt
 import math
 
 # Feature extractor
-def extract_features(image_path, vector_size=64):
+def extract_features(image_path, vector_size = 32):
     image = imread(image_path)
     try:
         # Using KAZE, cause SIFT, ORB and other was moved to additional module
