@@ -48,8 +48,6 @@ def batch_extractor(dataset_path, pickled_db_path="features.pck"):
         print ('Extracting features from image %s' % f)
         name = f.split('/')[-1].lower()
         result[name] = extract_features(f)
-    
-    print(type(result))
 
     # saving all our feature vectors in pickled file
     with open(pickled_db_path, 'wb') as fp:
@@ -87,8 +85,8 @@ class Matcher(object):
         sets = self.matrix
         v = test
         distance = []
-        sum = 0
         for i in sets:
+            sum = 0
             for j in range(len(v)):
                 sum += (i[j]-v[j]) ** 2
             d = sum ** (1/2)
@@ -103,8 +101,8 @@ def show_img(path):
     plt.show()
     
 def run():
-    dataset_path = 'D:/IF SEM 3/ALGEO/TUBES 2/PINS/test - Copy/'
-    test_path = 'D:/IF SEM 3/ALGEO/TUBES 2/PINS/test/'
+    dataset_path = 'dataset/'
+    test_path = 'testset/'
     dataset_files = [os.path.join(dataset_path, p) for p in sorted(os.listdir(dataset_path))]
     test_files = [os.path.join(test_path, p) for p in sorted(os.listdir(test_path))]
     # getting 3 random images 
