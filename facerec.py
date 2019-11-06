@@ -98,6 +98,29 @@ class Matcher(object):
         nearest_img_paths = self.names[nearest_ids].tolist()
         return nearest_img_paths, img_distances[nearest_ids].tolist()
 
+    def cos_sim(self,image_path, topn=5):
+        features = extract_features(image_path)
+        sets = self.matrix
+        distance = []
+        for i in sets:
+            sum = 0
+            sum1 = 0
+            sum2 = 0
+            for j in range(len(features)):
+                sum += (i[j]*features[j])
+                sum1 += (i[j]) ** 2
+                sum2 += (features[j]) ** 2
+            scaV = sum1 ** (1/2)
+            scaW = sum2 ** (1/2)
+            d = (sum)/(scaV * scaW)
+            distance.append(d)
+        img_distances = np.array(distance)
+        
+        # getting top 5 records
+        nearest_ids = np.argsort(img_distances)[:topn].tolist()
+        nearest_img_paths = self.names[nearest_ids].tolist()
+        return nearest_img_paths, img_distances[nearest_ids].tolist()
+
 
 
 def show_img(path):
@@ -121,7 +144,7 @@ def run():
         for s in sample:
             print ('Query image ==========================================')
             show_img(s)
-            names, match = ma.euclidean(s, topn=3)
+            names, match = ma.cos_sim(s, topn=3)
             print ('Result images ========================================')
             for i in range(3):
                 # we got cosine distance, less cosine distance between vectors
