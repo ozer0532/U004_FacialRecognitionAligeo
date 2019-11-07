@@ -21,6 +21,7 @@ class AppWindow(QMainWindow):
         test_path, file_type = QFileDialog.getOpenFileName(self, "Select File", "", "JPEG Files(*.jpg)")
         names, match = ma.euclidean(test_path, topn=10)
         self.ui.progressBar.hide()
+        dataset_path = str(QFileDialog.getExistingDirectory(self, "Select Database Directory"))
 
         pixmap = QPixmap(test_path)
         pixmap = pixmap.scaled(201, 191)
@@ -30,13 +31,15 @@ class AppWindow(QMainWindow):
             pixmap2 = QPixmap(os.path.join(dataset_path, names[i-1]))
             pixmap2 = pixmap2.scaled(71, 71)
             self.ui.label[i].setPixmap(pixmap2)
-            print('Match %s' % (match[i-1]))
+            print('Distance %s' % (match[i-1]))
+        print("")
             
     def cosine(self, s):
         ma = Matcher('features.pck')
         test_path, file_type = QFileDialog.getOpenFileName(self, "Select File", "", "JPEG Files(*.jpg)")
         names, match = ma.cos_sim(test_path, topn=10)
         self.ui.progressBar.hide()
+        dataset_path = str(QFileDialog.getExistingDirectory(self, "Select Database Directory"))
 
         pixmap = QPixmap(test_path)
         pixmap = pixmap.scaled(201, 191)
@@ -46,8 +49,8 @@ class AppWindow(QMainWindow):
             pixmap2 = QPixmap(os.path.join(dataset_path, names[i-1]))
             pixmap2 = pixmap2.scaled(71, 71)
             self.ui.label[i].setPixmap(pixmap2)
-            print('Match %s' % (match[i-1]))
-            #show_img(os.path.join(dataset_path, names[i]))
+            print('Distance %s' % (1-match[i-1]))
+        print("")
 
 def batch_extractor(dataset_path, gui, pickled_db_path="features.pck"):
     dataset_files = [(dataset_path + "/" + p) for p in sorted(os.listdir(dataset_path))]
@@ -68,11 +71,13 @@ def batch_extractor(dataset_path, gui, pickled_db_path="features.pck"):
         pickle.dump(result, fp)
 
 # DATA LOC
-dataset_path = 'dataset/'
-test_path = 'testset/'
+
+dataset_path = ''
+test_path = ''
+"""
 dataset_files = [os.path.join(dataset_path, p) for p in sorted(os.listdir(dataset_path))]
 test_files = [os.path.join(test_path, p) for p in sorted(os.listdir(test_path))]
-
+"""
 # GUI
 app = QApplication(sys.argv)
 w = AppWindow()

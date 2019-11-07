@@ -90,6 +90,6 @@ class Matcher(object):
         img_distances = np.array(distance)
         
         # getting top 5 records
-        nearest_ids = np.argsort(img_distances)[:topn].tolist()
+        nearest_ids = np.flip(np.argsort(img_distances))[:topn].tolist()
         nearest_img_paths = self.names[nearest_ids].tolist()
         return nearest_img_paths, img_distances[nearest_ids].tolist()
