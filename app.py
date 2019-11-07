@@ -1,5 +1,6 @@
 import sys
-from PyQt5.QtWidgets import QMainWindow, QApplication
+from PyQt5.QtWidgets import *
+from PyQt5.QtGui import *
 from facegui import Ui_TubesAlgeo
 from facerec import *
 
@@ -11,15 +12,28 @@ class AppWindow(QMainWindow):
         self.show()  
 
     def generate(self, s):
-        print("click", s)
-        batch_extractor(dataset_path, self.ui)
+        self.dataset_path = str(QFileDialog.getExistingDirectory(self, "Select Directory"))
+
+        batch_extractor(self.dataset_path, self.ui)
         
     def test(self, s):
-        print("click", s)
+        ma = Matcher('features.pck')
+        test_path, file_type = QFileDialog.getOpenFileName(self, "Select File", "", "JPEG Files(*.jpg)")
+        names, match = ma.match(test_path, topn=10)
+
+        pixmap = QPixmap(test_path)
+        pixmap = pixmap.scaled(201, 191)
+        self.ui.label[0].setPixmap(pixmap)
+        
+        for i in range(1,11):
+            pixmap2 = QPixmap(os.path.join(dataset_path, names[i-1]))
+            pixmap2 = pixmap2.scaled(71, 71)
+            self.ui.label[i].setPixmap(pixmap2)
+            print('Match %s' % (match[i-1]))
+            #show_img(os.path.join(dataset_path, names[i]))
 
 def batch_extractor(dataset_path, gui, pickled_db_path="features.pck"):
-    dataset_files = [os.path.join(dataset_path, p) for p in sorted(os.listdir(dataset_path))]
-
+    dataset_files = [(dataset_path + "/" + p) for p in sorted(os.listdir(dataset_path))]
     result = {}
     i = 0
     gui.progressBar.show()
