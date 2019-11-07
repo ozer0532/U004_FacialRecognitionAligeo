@@ -20,6 +20,7 @@ class AppWindow(QMainWindow):
         ma = Matcher('features.pck')
         test_path, file_type = QFileDialog.getOpenFileName(self, "Select File", "", "JPEG Files(*.jpg)")
         names, match = ma.euclidean(test_path, topn=10)
+        self.ui.progressBar.hide()
 
         pixmap = QPixmap(test_path)
         pixmap = pixmap.scaled(201, 191)
@@ -34,7 +35,8 @@ class AppWindow(QMainWindow):
     def cosine(self, s):
         ma = Matcher('features.pck')
         test_path, file_type = QFileDialog.getOpenFileName(self, "Select File", "", "JPEG Files(*.jpg)")
-        names, match = ma.cosine(test_path, topn=10)
+        names, match = ma.cos_sim(test_path, topn=10)
+        self.ui.progressBar.hide()
 
         pixmap = QPixmap(test_path)
         pixmap = pixmap.scaled(201, 191)
