@@ -160,6 +160,6 @@ class Ui_TubesAlgeo(object):
         self.label_19.setText(_translate("TubesAlgeo", "<html><head/><body><p align=\"center\">8</p></body></html>"))
         self.label_20.setText(_translate("TubesAlgeo", "<html><head/><body><p align=\"center\">9</p></body></html>"))
         self.label_21.setText(_translate("TubesAlgeo", "<html><head/><body><p align=\"center\">10</p></body></html>"))
-        self.label_32.setText(_translate("TubesAlgeo", "<html><head/><body><p align=\"center\"><span style=\" font-size:9pt;\">Nama org</span></p></body></html>"))
+        self.label_32.setText(_translate("TubesAlgeo", "<html><head/><body><p align=\"center\"><span style=\" font-size:9pt;\">Reference</span></p></body></html>"))
         self.label_33.setText(_translate("TubesAlgeo", "<html><head/><body><p><span style=\" font-size:14pt;\">Best Result:</span></p></body></html>"))
 

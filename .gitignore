@@ -1,4 +1,5 @@
 test/**
 __pycache__/**
 .vscode/**
+bin/__pycache__/**
 features.pck
