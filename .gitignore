@@ -1,4 +1,4 @@
-dataset/**
-testset/**
+test/**
 __pycache__/**
+.vscode/**
 features.pck
