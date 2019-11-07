@@ -16,10 +16,25 @@ class AppWindow(QMainWindow):
 
         batch_extractor(self.dataset_path, self.ui)
         
-    def test(self, s):
+    def euclidean(self, s):
         ma = Matcher('features.pck')
         test_path, file_type = QFileDialog.getOpenFileName(self, "Select File", "", "JPEG Files(*.jpg)")
-        names, match = ma.match(test_path, topn=10)
+        names, match = ma.euclidean(test_path, topn=10)
+
+        pixmap = QPixmap(test_path)
+        pixmap = pixmap.scaled(201, 191)
+        self.ui.label[0].setPixmap(pixmap)
+        
+        for i in range(1,11):
+            pixmap2 = QPixmap(os.path.join(dataset_path, names[i-1]))
+            pixmap2 = pixmap2.scaled(71, 71)
+            self.ui.label[i].setPixmap(pixmap2)
+            print('Match %s' % (match[i-1]))
+            
+    def cosine(self, s):
+        ma = Matcher('features.pck')
+        test_path, file_type = QFileDialog.getOpenFileName(self, "Select File", "", "JPEG Files(*.jpg)")
+        names, match = ma.cosine(test_path, topn=10)
 
         pixmap = QPixmap(test_path)
         pixmap = pixmap.scaled(201, 191)

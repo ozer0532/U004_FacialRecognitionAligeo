@@ -112,8 +112,11 @@ class Ui_TubesAlgeo(object):
         self.menuActions = self.menubar.addMenu("Actions")
         self.genAct = self.menuActions.addAction("Generate Database")
         self.genAct.triggered.connect(Window.generate)
-        self.testAct = self.menuActions.addAction("Test File")
-        self.testAct.triggered.connect(Window.test)
+        self.eucAct = self.menuActions.addAction("Test File (Euclidean Distance)")
+        self.eucAct.triggered.connect(Window.euclidean)
+        self.cosAct = self.menuActions.addAction("Test File (Cosine Distance)")
+        self.cosAct.triggered.connect(Window.cosine)
+        
 
         Window.setMenuBar(self.menubar)
         
