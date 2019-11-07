@@ -16,7 +16,7 @@ class AppWindow(QMainWindow):
 
         batch_extractor(self.dataset_path, self.ui)
         
-    def test(self, s):
+    def euclidean(self, s):
         ma = Matcher('features.pck')
         test_path, file_type = QFileDialog.getOpenFileName(self, "Select File", "", "JPEG Files(*.jpg)")
         names, match = ma.match(test_path, topn=10)

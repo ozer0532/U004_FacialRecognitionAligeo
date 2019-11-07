@@ -54,19 +54,6 @@ class Matcher(object):
         self.matrix = np.array(self.matrix)
         self.names = np.array(self.names)
 
-    def cos_cdist(self, vector):
-        # getting cosine distance between search image and images database
-        v = vector.reshape(1, -1)
-        return scipy.spatial.distance.cdist(self.matrix, v, 'cosine').reshape(-1)
-
-    def match(self, image_path, topn=5):
-        features = extract_features(image_path)
-        img_distances = self.cos_cdist(features)
-        # getting top 5 records
-        nearest_ids = np.argsort(img_distances)[:topn].tolist()
-        nearest_img_paths = self.names[nearest_ids].tolist()
-        return nearest_img_paths, img_distances[nearest_ids].tolist()
-
     def euclidean(self,image_path, topn=5):
         features = extract_features(image_path)
         sets = self.matrix
@@ -106,36 +93,3 @@ class Matcher(object):
         nearest_ids = np.argsort(img_distances)[:topn].tolist()
         nearest_img_paths = self.names[nearest_ids].tolist()
         return nearest_img_paths, img_distances[nearest_ids].tolist()
-
-
-
-def show_img(path):
-    img = imread(path, pilmode="RGB")
-    plt.imshow(img)
-    plt.show()
-"""    
-def run():
-    dataset_path = 'dataset/'
-    test_path = 'testset/'
-    dataset_files = [os.path.join(dataset_path, p) for p in sorted(os.listdir(dataset_path))]
-    test_files = [os.path.join(test_path, p) for p in sorted(os.listdir(test_path))]
-    # getting 3 random images 
-    sample = random.sample(test_files, 1)
-    action = input();
-    if (action == "input"):
-        batch_extractor(dataset_path)
-    elif (action == "test"):
-        ma = Matcher('features.pck')
-        
-        for s in sample:
-            print ('Query image ==========================================')
-            show_img(s)
-            names, match = ma.match(s, topn=3)
-            print ('Result images ========================================')
-            for i in range(3):
-                # we got cosine distance, less cosine distance between vectors
-                # more they similar, thus we subtruct it from 1 to get match value
-                print ('Match %s' % (match[i]))
-                show_img(os.path.join(dataset_path, names[i]))
-"""
-#run()
